@@ -43,7 +43,8 @@ class _MoviePoster extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, 'details', arguments: 'movie-info');
+              Navigator.pushNamed(context, 'details',
+                  arguments: 'movie-instance');
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
