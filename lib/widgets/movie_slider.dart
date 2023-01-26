@@ -1,7 +1,11 @@
+import 'package:filmin/models/models.dart';
 import 'package:flutter/material.dart';
 
 class MovieSlider extends StatelessWidget {
-  const MovieSlider({super.key});
+  MovieSlider({super.key, required this.movies, this.title});
+
+  final List<Movie> movies;
+  String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +16,24 @@ class MovieSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: Text(
-              'Populares',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Text(
+                title!,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
-                itemBuilder: (_, int index) => _MoviePoster()),
+                itemCount: movies.length,
+                itemBuilder: (_, index) {
+                  print('aasdsa $movies');
+                  //final Movie moviePopular = movies[index];
+                  return _MoviePoster(moviePopular: movies[index]);
+                }),
           ),
         ],
       ),
@@ -32,6 +42,9 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
+  const _MoviePoster({super.key, required this.moviePopular});
+  final Movie moviePopular;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,18 +61,17 @@ class _MoviePoster extends StatelessWidget {
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(
-                    'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wJiGedOCZhwMx9DezY8uwbNxmAY.jpg'),
+              child: FadeInImage(
+                placeholder: const AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(moviePopular.fullPosterImg),
                 width: 130,
                 height: 160,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const Text(
-            'Matthew McConaughey',
+          Text(
+            moviePopular.title,
             overflow: TextOverflow.ellipsis,
             //maxLines: 2,
             textAlign: TextAlign.center,
