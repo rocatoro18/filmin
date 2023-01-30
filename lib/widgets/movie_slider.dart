@@ -58,7 +58,10 @@ class _MovieSliderState extends State<MovieSlider> {
                 itemBuilder: (_, index) {
                   //print('aasdsa ${widget.movies}');
                   //final Movie moviePopular = movies[index];
-                  return _MoviePoster(moviePopular: widget.movies[index]);
+                  return _MoviePoster(
+                      moviePopular: widget.movies[index],
+                      heroId:
+                          '${widget.title}- $index -${widget.movies[index].id}');
                 }),
           ),
         ],
@@ -68,11 +71,14 @@ class _MovieSliderState extends State<MovieSlider> {
 }
 
 class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({super.key, required this.moviePopular});
+  const _MoviePoster(
+      {super.key, required this.moviePopular, required this.heroId});
   final Movie moviePopular;
+  final String heroId;
 
   @override
   Widget build(BuildContext context) {
+    moviePopular.heroId = heroId;
     return Container(
       width: 130,
       height: 200,
@@ -84,14 +90,17 @@ class _MoviePoster extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, 'details', arguments: moviePopular);
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: const AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(moviePopular.fullPosterImg),
-                width: 130,
-                height: 160,
-                fit: BoxFit.cover,
+            child: Hero(
+              tag: moviePopular.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(moviePopular.fullPosterImg),
+                  width: 130,
+                  height: 160,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
