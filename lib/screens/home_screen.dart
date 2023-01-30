@@ -2,6 +2,7 @@ import 'package:filmin/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:filmin/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:filmin/search/search_delegate.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +19,11 @@ class HomeScreen extends StatelessWidget {
           title: const Text('Filmin'),
           elevation: 0,
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: MovieSearchDelegate());
+                },
+                icon: const Icon(Icons.search))
           ],
         ),
         body: SingleChildScrollView(

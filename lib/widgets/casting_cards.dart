@@ -31,9 +31,9 @@ class CastingCards extends StatelessWidget {
             //color: Colors.red,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 10,
+              itemCount: cast.length,
               itemBuilder: ((_, index) {
-                return const _CastCard();
+                return _CastCard(cast: cast[index]);
               }),
             ),
           );
@@ -42,7 +42,8 @@ class CastingCards extends StatelessWidget {
 }
 
 class _CastCard extends StatelessWidget {
-  const _CastCard({super.key});
+  const _CastCard({super.key, required this.cast});
+  final Cast cast;
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +56,16 @@ class _CastCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: const FadeInImage(
+            child: FadeInImage(
                 height: 130,
                 width: 100,
                 fit: BoxFit.cover,
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(
-                    'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wJiGedOCZhwMx9DezY8uwbNxmAY.jpg')),
+                placeholder: const AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(cast.fullProfileImg)),
           ),
           const SizedBox(height: 5),
-          const Text(
-            'actor.name klxfkjdlkfgjdfg sdjfsdljaslkd',
+          Text(
+            cast.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
